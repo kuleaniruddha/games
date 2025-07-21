@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emoji Memory Game</title>
+  <link rel="stylesheet" href="memory.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>🧠 Emoji Memory Game</h1>
+    <div class="grid" id="memory-grid"></div>
+    <button id="restart">🔄 Restart Game</button>
+  </div>
+
+<script>
+  const emojis = ['🐶','🐱','🦊','🐻','🐼','🐨','🦁','🐸','🐵','🐔',
+                  '🐧','🐦','🐤','🦆','🦉','🦇','🐺','🐗','🐴','🦄',
+                  '🐝','🐛','🦋','🐌','🐞']; // more than needed, safe range
+
+  let grid = document.getElementById("memory-grid");
+  let restartBtn = document.getElementById("restart");
+
+  let firstCard = null;
+  let secondCard = null;
+  let lockBoard = false;
+  let matchedPairs = 0;
+  const totalPairs = 18; // 6x6 = 36 cards = 18 pairs
+
+  function createBoard() {
+    grid.innerHTML = "";
+    matchedPairs = 0;
+    const selected = emojis.slice(0, totalPairs);
+    const doubled = [...selected, ...selected];
+    const shuffled = doubled.sort(() => 0.5 - Math.random());
+
+    shuffled.forEach((emoji, index) => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.dataset.emoji = emoji;
+      card.dataset.index = index;
+      card.innerText = "❓";
+      card.addEventListener("click", flipCard);
+      grid.appendChild(card);
+    });
+  }
+
+  function flipCard() {
+    if (lockBoard || this === firstCard || this.classList.contains("flipped")) return;
+    this.innerText = this.dataset.emoji;
+    this.classList.add("flipped");
+
+    if (!firstCard) {
+      firstCard = this;
+      return;
+    }
+
+    secondCard = this;
+    lockBoard = true;
+
+    if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+      firstCard.removeEventListener("click", flipCard);
+      secondCard.removeEventListener("click", flipCard);
+      matchedPairs++;
+      resetFlip();
+
+      if (matchedPairs === totalPairs) {
+        setTimeout(() => {
+          alert("🎉 Congratulations, You Won!");
+        }, 500);
+      }
+    } else {
+      setTimeout(() => {
+        firstCard.innerText = "❓";
+        secondCard.innerText = "❓";
+        firstCard.classList.remove("flipped");
+        secondCard.classList.remove("flipped");
+        resetFlip();
+      }, 800);
+    }
+  }
+
+  function resetFlip() {
+    [firstCard, secondCard] = [null, null];
+    lockBoard = false;
+  }
+
+  restartBtn.addEventListener("click", createBoard);
+  createBoard();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+/* Base Setup */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 500px;
+  animation: fadeIn 1s ease;
+}
+
+/* Logo Styling */
+.logo {
+  width: 180px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  animation: slideDown 0.7s ease-out;
+}
+
+/* Countdown */
+#countdown {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #007acc;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Hands animation */
+.hand-symbol {
+  font-size: 3rem;
+  margin: 10px;
+  display: inline-block;
+  opacity: 0;
+}
+
+/* Grid Buttons */
+.grid {
+  display: grid;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+a {
+  display: block;
+  padding: 15px;
+  background-color: #007acc;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: background 0.3s ease;
+}
+
+a:hover {
+  background-color: #005fa3;
+}
+
+.branding {
+  margin-top: 30px;
+  font-style: italic;
+  color: #444;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+footer p {
+  margin: 0;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Show emojis with animation */
+.show {
+  opacity: 1 !important;
+  animation: zoomIn 0.5s ease;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  .logo {
+    width: 120px;
+  }
+  #countdown {
+    font-size: 2rem;
+  }
+  .hand-symbol {
+    font-size: 2.5rem;
+  }
+}

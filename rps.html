@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="rps.css">
+</head>
+<body>
+  <div class="rps-container">
+    <h1>🪨 Rock Paper Scissors ✂️</h1>
+    <div id="countdown">3</div>
+
+    <div class="choices">
+      <div id="player-choice" class="choice-box">🧍‍♂️</div>
+      <div id="bot-choice" class="choice-box">🤖</div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="startGame('rock')">🪨 Rock</button>
+      <button onclick="startGame('paper')">📄 Paper</button>
+      <button onclick="startGame('scissors')">✂️ Scissors</button>
+    </div>
+
+    <div id="result"></div>
+
+    <a class="back" href="index.html">← Back to Games</a>
+  </div>
+
+  <script>
+    const choices = ['rock', 'paper', 'scissors'];
+    const emojis = {
+      rock: '🪨',
+      paper: '📄',
+      scissors: '✂️'
+    };
+
+    function startGame(playerSelection) {
+      document.getElementById("countdown").style.opacity = 1;
+      document.getElementById("player-choice").style.transform = "scale(0)";
+      document.getElementById("bot-choice").style.transform = "scale(0)";
+      document.getElementById("result").textContent = "";
+
+      let count = 3;
+      const countdownEl = document.getElementById("countdown");
+      const countdown = setInterval(() => {
+        countdownEl.textContent = count;
+        count--;
+        if (count < 0) {
+          clearInterval(countdown);
+          countdownEl.style.opacity = 0;
+
+          const botSelection = choices[Math.floor(Math.random() * 3)];
+
+          setTimeout(() => {
+            document.getElementById("player-choice").textContent = emojis[playerSelection];
+            document.getElementById("player-choice").style.transform = "scale(1)";
+          }, 300);
+
+          setTimeout(() => {
+            document.getElementById("bot-choice").textContent = emojis[botSelection];
+            document.getElementById("bot-choice").style.transform = "scale(1)";
+          }, 600);
+
+          const resultText = getResult(playerSelection, botSelection);
+          setTimeout(() => {
+            document.getElementById("result").textContent = resultText;
+          }, 1000);
+        }
+      }, 500);
+    }
+
+    function getResult(player, bot) {
+      if (player === bot) return "It's a draw!";
+      if ((player === 'rock' && bot === 'scissors') ||
+          (player === 'paper' && bot === 'rock') ||
+          (player === 'scissors' && bot === 'paper')) {
+        return "You win! 🎉";
+      }
+      return "Bot wins! 🤖";
+    }
+  </script>
+</body>
+</html>

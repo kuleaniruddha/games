@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guess the Number</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #e0eafc, #cfdef3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    #game-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>🎯 Guess the Number</h1>
+    <p>Pick a number between 1 and 100</p>
+    <input type="number" id="guess" min="1" max="100" />
+    <button onclick="checkGuess()">Submit</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    function checkGuess() {
+      const userGuess = parseInt(document.getElementById('guess').value);
+      const result = document.getElementById('result');
+      attempts++;
+
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        result.textContent = "❗ Please enter a number between 1 and 100.";
+      } else if (userGuess === secretNumber) {
+        result.textContent = `🎉 Correct! You guessed it in ${attempts} tries!`;
+      } else if (userGuess < secretNumber) {
+        result.textContent = "🔼 Too low! Try again.";
+      } else {
+        result.textContent = "🔽 Too high! Try again.";
+      }
+    }
+  </script>
+</body>
+</html>
